@@ -68,31 +68,31 @@ PROC MAIN
 
     OUT DX,AL  
 
-	CALL LCD_INIT	
+	CALL LCD_INIT           ; Calling LCD function	
 	
     
     
     
 	MOV DL,1   
 	MOV DH,3  
-	CALL LCD_SET_CUR     	
-	LEA SI,MYSTR    
-	CALL LCD_WRITE_STR
+	CALL LCD_SET_CUR        ; Calling function to set cursor on LCD screen     	
+	LEA SI,MYSTR            ; Write Welcome Message
+	CALL LCD_WRITE_STR      ; Calling function that write message to LCD screen
 
 	
 	MOV DL,2 
 	MOV DH, 6 
-	CALL LCD_SET_CUR  
-	LEA SI,NUT
-	CALL LCD_WRITE_STR
+	CALL LCD_SET_CUR        ; Calling function to set cursor on LCD screen  
+	LEA SI,NUT              ; Write Welcome Message
+	CALL LCD_WRITE_STR      ; Calling function to set cursor on LCD screen  
 	
 
     MOV CX, 60000
-    CALL DELAY    
+    CALL DELAY              ; Calling function to Delay 
     
-    MOV CX, 60000
-    CALL DELAY   
-    CALL LCD_CLEAR 
+    MOV CX, 60000           
+    CALL DELAY              ; Calling function to Delay 
+    CALL LCD_CLEAR          ; Calling function to Clear LCD screen
     
     
     
@@ -106,7 +106,10 @@ PROC MAIN
 
 
 
-KEYPAD: 
+KEYPAD:                     ;---------- Keypad Segment ----------
+
+    
+    ; Here we can assign each keypad key to their corresponding character and being pressed it will be written and shown on the LCD screen
 
     
     MOV AL, 11111110B
@@ -133,7 +136,8 @@ KEYPAD:
             JMP INPUT_NUM   
 
    
-N7:
+N7: ; For Keypad Number 7
+
     CMP AL, 11011110b
     JNE N8   
     
@@ -149,7 +153,8 @@ N7:
             JMP INPUT_NUM
            
    
-N8:
+N8: ; For Keypad Number 8
+
     CMP AL, 10111110b 
     JNE N9  
     
@@ -164,7 +169,8 @@ N8:
             MOV BD, 1
             JMP INPUT_NUM
         
-N9:
+N9: ; For Keypad Number 7
+
     CMP AL, 01111110b 
     JNE NDIVIDE 
     
@@ -184,7 +190,7 @@ N9:
             JMP KEYPAD
       
     
-NDIVIDE: 
+NDIVIDE: ; For Keypad Divide Symbol 
 
     MOV AL, 11111101b
     OUT PC, AL
@@ -210,7 +216,8 @@ NDIVIDE:
         JMP INPUT_NUM   
 
    
-N4:
+N4: ; For Keypad Number 4
+
     CMP AL, 11011101b
     JNE N5
         CMP BD, 1
@@ -225,7 +232,8 @@ N4:
         JMP INPUT_NUM
            
    
-N5:
+N5: ; For Keypad Number 5
+
     CMP AL, 10111101b
     JNE N6
     
@@ -240,7 +248,8 @@ N5:
         MOV BD, 1
         JMP INPUT_NUM
         
-N6:
+N6: ; For Keypad Number 6
+
     CMP AL, 01111101b
     JNE NCORE
     
@@ -287,7 +296,8 @@ NCORE:
         JMP INPUT_NUM   
 
   
-N1:
+N1: ; For Keypad Number 1
+
     CMP AL, 11011011b 
     JNE N2
         CMP BD, 1
@@ -303,7 +313,8 @@ N1:
            
 
    
-N2:
+N2: ; For Keypad Number 2
+
     CMP AL, 10111011b 
     JNE N3
     
@@ -319,7 +330,8 @@ N2:
             JMP INPUT_NUM
 
         
-N3:
+N3: ; For Keypad Number 3
+
     CMP AL, 01111011b 
     JNE NTRU
     
@@ -375,7 +387,7 @@ N3:
             
             
                  
-NTRU: 
+NTRU:    
 
     MOV AL, 11110111b
     OUT PC, AL
@@ -433,7 +445,7 @@ N0:
             MOV BD, 1    
             JMP CALCULATE
         
-NEQUAL:
+NEQUAL: ; For Keypad Equal Sign
     CMP AL, 01110111b 
     JNE NC
     
@@ -457,7 +469,7 @@ NEQUAL:
         MOV BD, 1  
     
         JMP KEYPAD    
-NC1: 
+NC1:   ; For Keypad clear
     
     MOV BD, 0 
     JMP KEYPAD  
@@ -484,14 +496,14 @@ IMPORT_WORD:
       
 
 
-INPUT_NUM:  
+INPUT_NUM: ;The input numbers
 
     CMP SYMBOL, 0
     
-    JE LNUM1
+    JE LNUM1 ;First input
     
     
-    JMP LNUM2    
+    JMP LNUM2 ;Second input    
 
 
                                           
@@ -552,7 +564,7 @@ LNUM2:
  
 
                  
-CALCULATE: 
+CALCULATE: ;To perform different calculations
 
 
 
@@ -1172,6 +1184,7 @@ HLT
 ENDP MAIN
 
 
+;------------- Print Segment -------------
 
 PROC PRINT  
     
@@ -1332,7 +1345,7 @@ NFOAT:
 ENDP PRINT
 
 
-
+;Delay Proc
 
 PROC DELAY
 	JCXZ @DELAY_END
@@ -1343,7 +1356,7 @@ PROC DELAY
 ENDP DELAY
 
 
-
+;----------- LCD Segment -----------
 
 PROC LCD_INIT
  
