@@ -6,8 +6,8 @@
     PORT_C DB 0  
     
 
-    MYSTR	DB	"CSE 311 LAB GROUP 4$"   
-    NUT DB "NUT 16$"    
+    MYSTR	DB	"CSE 331-LAB GROUP:4$"   
+    NUT DB "16-bit Calculator$"    
     INF DB "INF$"
     SANS DB "ANS$"   
     ERROR   DB  "ERROR$" 
